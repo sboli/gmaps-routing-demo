@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MouseEvent, LatLngLiteral } from '@agm/core';
+import { Map, DirectionsService, DirectionsRenderer } from '@google/maps';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +14,14 @@ export class AppComponent implements OnInit {
     lng: -61.5710
   };
   zoom = 12;
-  map: google.maps.Map | undefined = undefined;
+  map: Map | undefined = undefined;
   markers = [];
+  waypoints = [];
 
   ngOnInit(): void {
   }
 
-  onMapReady(map: google.maps.Map) {
+  onMapReady(map: Map) {
     this.map = map;
   }
 
@@ -29,5 +31,11 @@ export class AppComponent implements OnInit {
 
   addMarker(latLng: LatLngLiteral) {
     this.markers.push(latLng);
+    this.waypoints.push({
+      location: latLng,
+      stopover: true
+    });
   }
+
 }
+
